@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+
+<body>
+	<button id="random">Blink Arduino pin 13</button>
+	<p id="info"></p>
+
+	<script src="/socket.io/socket.io.js"></script>
+	<script>
+		const socket = io()
+		const randomButton = document.querySelector("button#random")
+		const infoText = document.querySelector("p#info")
+
+		let teller = 0
+
+		randomButton.addEventListener("click", function blinkArduino() {
+			socket.emit("randomValue", teller)
+			teller++
+		})
+
+		socket.on("valueFromDevice", function receiveData(data) {
+			infoText.innerHTML = "Arduino potentiometer: " + data
+		})
+	</script>
+</body>
+
+</html>
