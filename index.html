@@ -8,24 +8,25 @@
 </head>
 
 <body>
-	<button id="random">Blink Arduino pin 13</button>
+	<button id="random">Send data to node.js/serial port</button>
 	<p id="info"></p>
 
 	<script src="/socket.io/socket.io.js"></script>
 	<script>
 		const socket = io()
-		const randomButton = document.querySelector("button#random")
+		const button = document.querySelector("button")
 		const infoText = document.querySelector("p#info")
+		let counter = 0
 
-		let teller = 0
-
-		randomButton.addEventListener("click", function blinkArduino() {
-			socket.emit("randomValue", teller)
-			teller++
+		// Send data to node.js
+		button.addEventListener("click", function sendToNodeJS() {
+			socket.emit("dataFromBrowser", counter)
+			counter++
 		})
 
-		socket.on("valueFromDevice", function receiveData(data) {
-			infoText.innerHTML = "Arduino potentiometer: " + data
+		// Receive data from node.js
+		socket.on("dataFromNodeJS", function receiveFromNodeJS(data) {
+			infoText.innerHTML = `Data from node.js: ${data}`
 		})
 	</script>
 </body>
