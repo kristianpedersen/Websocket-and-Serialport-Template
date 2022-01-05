@@ -3,6 +3,7 @@ const http = require('http').createServer(app)
 const io = require('socket.io')(http)
 const SerialPort = require('serialport')
 const Readline = require('@serialport/parser-readline')
+const { exec } = require("child_process")
 
 /**
  * From SerialPort.list(), find your microcontroller's path.
@@ -14,7 +15,7 @@ const port = new SerialPort("COM6", { baudRate: 9600 })
 const parser = new Readline()
 port.pipe(parser)
 
-app.get('/', function serveIndexHtml(req, res) {
+app.get('/', function serveIndexHtml(_, res) {
 	res.sendFile(__dirname + '/index.html')
 })
 
@@ -22,6 +23,7 @@ io.on('connection', function socketSetup(socket) {
 	// Receive data from browser
 	socket.on("dataFromBrowser", function fromBrowserToSerial(data) {
 		console.log(`Data from browser: ${data}`)
+		exec("ls -l")
 	})
 
 	// Send data from serial port to browser
