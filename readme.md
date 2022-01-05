@@ -1,5 +1,5 @@
 # Template: Browser <---> Node.js
-I set up this template for my previous job, in order to do the following:
+I set up this template at my previous job, in order to do the following:
 * Arduino sensor readings --> HTML Canvas.
 * HTML buttons --> Node.js/Linux commands
 ## Installation
